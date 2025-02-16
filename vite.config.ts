@@ -7,7 +7,7 @@ export default ({ mode }: { mode: string })=>{
   process.env = {...process.env, ...loadEnv(mode, process.cwd())};
   
   return defineConfig({
-  base: process.env.VITE_BASE_URL,
+  base: process.env.VITE_BASE_URL || '/jam-lab/',
   plugins: [react(), tailwindcss()],
   preview: {
     port: 8080,
