@@ -1,6 +1,6 @@
 <!-- This is a hack to defer routing to client side routing when hosting this as a SPA.  --> 
 <!-- See https://github.com/rafgraph/spa-github-pages for more information. -->
- 
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -25,7 +25,10 @@
       // https://username.github.io/repo-name/one/two?a=b&c=d#qwe becomes
       // https://username.github.io/repo-name/?/one/two&a=b~and~c=d#qwe
       // Otherwise, leave pathSegmentsToKeep as 0.
-      var pathSegmentsToKeep = 0;
+      
+      // gh pages has /jam-lab/ segment in the path which we should keep
+      var pathSegments = window.location.pathname.split('/').filter(Boolean); // Removes empty segments
+      var pathSegmentsToKeep = pathSegments[0] === "jam-lab" ? 1 : 0;
 
       var l = window.location;
       l.replace(
