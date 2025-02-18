@@ -7,6 +7,7 @@ export default ({ mode }: { mode: string })=>{
   process.env = {...process.env, ...loadEnv(mode, process.cwd())};
   
   return defineConfig({
+  // `/jam-lab/` is being used as the fallback simply because it's trickier to set up github enviroment variables/secrets
   base: process.env.VITE_BASE_URL || '/jam-lab/',
   plugins: [react(), tailwindcss()],
   preview: {
