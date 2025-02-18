@@ -31,8 +31,9 @@ jobs:
       # Move build output to dist/jam-lab
       - name: Move build output from dist to dist/jam-lab
         run: |
-          mkdir -p dist/jam-lab 
-          mv dist/* dist/jam-lab
+          mkdir -p dist/jam-lab
+          shopt -s extglob
+          mv dist/!(jam-lab) dist/jam-lab
 
       # deploy project
 
