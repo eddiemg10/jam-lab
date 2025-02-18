@@ -44,4 +44,4 @@ jobs:
         with:
           # if uses: JamesIves/github-pages-deploy-action@4.1.4 runs it will automatically cerate new branch which name is gh-pages.
           branch: gh-pages
-          folder: dist
+          folder: dist/jam-lab
