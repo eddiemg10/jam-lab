@@ -20,7 +20,7 @@ export default function Home() {
         });
     };
     fetchUserProfile();
-  }, [userProfileP]);
+  }, []);
   //TODO: Add a way to log out via UI
   return (
     <>
