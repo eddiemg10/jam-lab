@@ -8,20 +8,21 @@ import { AxiosError } from "axios";
 // Don't actually know if this works and at this point Idk what the code is doing
 // There's a chance that this works though *knock on wood*
 
-export function useSpotifyAPI
-(apiFetchingFunction: (accessToken: string) => Promise<any>) {
+export function useSpotifyAPI(
+  apiFetchingFunction: (accessToken: string) => Promise<any>,
+) {
   const navigate = useNavigate();
 
   return (async () => {
     const accessToken = localStorage.getItem("access_token");
     if (!accessToken) throw new Error("No access token found");
-    
+
     try {
       // Attempt API call with current token
       const result = await apiFetchingFunction(accessToken);
       return result;
     } catch (e) {
-      if(e instanceof AxiosError && e.status === 401) {
+      if (e instanceof AxiosError && e.status === 401) {
         try {
           // Refresh token
           const refreshToken = localStorage.getItem("refresh_token");
@@ -42,13 +43,13 @@ export function useSpotifyAPI
           const result = await apiFetchingFunction(access_token);
           return result;
         } catch (e) {
-          if(e instanceof AxiosError && e.status === 401) {
+          if (e instanceof AxiosError && e.status === 401) {
             // We keep ending up here, to investigate
             console.error("Token refresh failed. Redirecting to login.");
             logout(); // Clear tokens
             navigate("/login");
             throw new Error("Token refresh failed. Redirecting to login.");
-          } else {  
+          } else {
             throw e;
           }
         }

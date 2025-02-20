@@ -20,7 +20,7 @@ const getAuthorizationUrl = (codeChallenge: string): string => {
     redirect_uri: SPOTIFY_REDIRECT_URI,
     code_challenge_method: "S256",
     code_challenge: codeChallenge,
-    scope: "user-top-read playlist-read-private"
+    scope: "user-top-read playlist-read-private",
   };
 
   return `https://accounts.spotify.com/authorize?${querystring.stringify(params)}`;

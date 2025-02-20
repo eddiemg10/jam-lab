@@ -1,17 +1,32 @@
 import { useEffect, useState } from "react";
 import { getUserProfile, UserProfile } from "../spotify/profile";
 import { useSpotifyAPI } from "../hooks/useSpotifyApi";
-import { Artist, fetchTopArtistForMonth, fetchTopArtistsForYear, fetchTopTracksForMonth, fetchTopTracksForYear, getTopItemsForUser, Track } from "../spotify/top";
+import {
+  Artist,
+  fetchTopArtistForMonth,
+  fetchTopArtistsForYear,
+  fetchTopTracksForMonth,
+  fetchTopTracksForYear,
+  Track,
+} from "../spotify/top";
 import ArtistCard from "../components/ArtistCard";
 import SongCard from "../components/SongCard";
 import Divider from "../components/Divider";
 
 export default function Home() {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const [topArtistLastMonth, settopArtistLastMonth] = useState<Artist | null>(null);
-  const [topArtistsLastYear, settopArtistsLastYear] = useState<[Artist] | null>(null);
-  const [topSongsLastMonth, settopSongsLastMonth] = useState<[Track] | null>(null);
-  const [topSongsLastYear, settopSongsLastYear] = useState<[Track] | null>(null);
+  const [topArtistLastMonth, settopArtistLastMonth] = useState<Artist | null>(
+    null,
+  );
+  const [topArtistsLastYear, settopArtistsLastYear] = useState<[Artist] | null>(
+    null,
+  );
+  const [topSongsLastMonth, settopSongsLastMonth] = useState<[Track] | null>(
+    null,
+  );
+  const [topSongsLastYear, settopSongsLastYear] = useState<[Track] | null>(
+    null,
+  );
 
   const userProfileP = useSpotifyAPI(getUserProfile);
   const topArtistLastMonthP = useSpotifyAPI(fetchTopArtistForMonth);
@@ -26,7 +41,7 @@ export default function Home() {
     const fetchUserProfile = async () => {
       // Get the user profile
       userProfileP
-        .then((res) => {  
+        .then((res) => {
           setUserProfile(res);
         })
         .catch((_) => {});
@@ -38,14 +53,14 @@ export default function Home() {
           console.log(res);
         })
         .catch((_) => {});
-      
+
       // Get the top artists for the last year
       topArtistsLastYearP
         .then((res) => {
           settopArtistsLastYear(res);
         })
         .catch((_) => {});
-      
+
       // Get the top songs for the last month
       topSongsLastMonthP
         .then((res) => {
@@ -59,7 +74,6 @@ export default function Home() {
           settopSongsLastYear(res);
         })
         .catch((_) => {});
-      
     };
     fetchUserProfile();
   }, []);
@@ -88,13 +102,20 @@ export default function Home() {
 
           <div className="flex md:flex-nowrap flex-wrap text-white gap-5 justify-center items-stretch min-h-[60vh] mt-20 w-full">
             <div className="flex p-8 flex-col md:w-[30%] w-full bg-jam-surface/20 rounded-md">
-              <h2 className="text-white text-xl text-center mb-5"> Your top Artists</h2>
-              <h3 className="text-yellow-100 font-medium text-sm">Last Month</h3>
+              <h2 className="text-white text-xl text-center mb-5">
+                {" "}
+                Your top Artists
+              </h2>
+              <h3 className="text-yellow-100 font-medium text-sm">
+                Last Month
+              </h3>
               <div className="pl-2 my-3">
-                {topArtistLastMonth && <ArtistCard artist={topArtistLastMonth} />}
+                {topArtistLastMonth && (
+                  <ArtistCard artist={topArtistLastMonth} />
+                )}
               </div>
               <h3 className="text-yellow-100 font-medium text-sm">Last Year</h3>
-              
+
               <div className="pl-2 my-3 flex flex-col gap-1">
                 {topArtistsLastYear &&
                   topArtistsLastYear.map((artist) => (
@@ -103,11 +124,15 @@ export default function Home() {
               </div>
             </div>
             <div className="flex flex-col p-8 md:w-[70%] w-full items-center bg-jam-surface/20 rounded-md">
-              <h2 className="text-white text-xl text-center mb-5"> Your top Songs</h2>
+              <h2 className="text-white text-xl text-center mb-5">
+                {" "}
+                Your top Songs
+              </h2>
               <div className="flex sm:flex-row flex-col w-full gap-3">
-                
                 <div className="flex flex-1 flex-col">
-                  <h3 className="ml-4 text-yellow-100 font-medium text-sm">Last Month</h3>
+                  <h3 className="ml-4 text-yellow-100 font-medium text-sm">
+                    Last Month
+                  </h3>
                   <div className="my-3 flex flex-col gap-3">
                     <Divider />
                     {topSongsLastMonth &&
@@ -117,13 +142,15 @@ export default function Home() {
                           <Divider />
                         </>
                       ))}
-                  </div>  
+                  </div>
                 </div>
 
                 <div className="flex flex-1 flex-col">
-                  <h3 className="ml-4 text-yellow-100 font-medium text-sm">Last Year</h3>
+                  <h3 className="ml-4 text-yellow-100 font-medium text-sm">
+                    Last Year
+                  </h3>
                   <div className="my-3 flex flex-col gap-3">
-                  <Divider />
+                    <Divider />
                     {topSongsLastYear &&
                       topSongsLastYear.map((track) => (
                         <>
@@ -133,7 +160,7 @@ export default function Home() {
                       ))}
                   </div>
                 </div>
-              </div> 
+              </div>
             </div>
           </div>
         </div>
